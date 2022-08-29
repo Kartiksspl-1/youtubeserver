@@ -41,9 +41,9 @@ const getuser = async (req, res) => {
 const subscribe = async (req, res) => {
   try {
     await UserSchema.updateOne(
-      { _id: req.params.id },
+      { _id: req.id },
       {
-        $addToSet: { subscribedusers: req.id },
+        $addToSet: { subscribedusers: req.params.id },
       }
     );
 
@@ -58,13 +58,13 @@ const subscribe = async (req, res) => {
 const unsubscribe = async (req, res) => {
   try {
     await UserSchema.updateOne(
-      { _id: req.params.id },
-      { $pull: { subscribedusers:req.id }}
+      { _id: req.id },
+      { $pull: { subscribedusers:req.params.id }}
     );
     res.json("unsubscribed");
   } catch (err) {
     console.log(err);
-    res.json('unsubscribed');
+    res.json('not able to unsubscribe');
   }
 };
 
